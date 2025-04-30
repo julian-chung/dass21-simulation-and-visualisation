@@ -5,22 +5,22 @@ import os
 # Set random seed for reproducibility
 np.random.seed(42)
 
-# Parameters
+# Assigning Parameters
 n_per_group = 20
 timepoints = ["baseline", "3_months", "6_months", "9_months", "12_months"]
 groups = ["intervention", "control"]
 questions = [f"Q{i}" for i in range(1, 22)]
 
-# Question mapping to subscales
+# Mapping the DASS21 questions to their respective subscales
 dass_anxiety = ["Q2", "Q4", "Q7", "Q9", "Q15", "Q19", "Q20"]
 dass_depression = ["Q3", "Q5", "Q10", "Q13", "Q16", "Q17", "Q21"]
 dass_stress = ["Q1", "Q6", "Q8", "Q11", "Q12", "Q14", "Q18"]
 
-# Effect modifier function
+# Creating an effect modifier to apply to the treatment group
 def apply_treatment_effect(scores, effect_size=0.2):
     return np.clip(np.round(scores * (1 - effect_size)), 0, 3).astype(int)
 
-# Generate the data
+# Generate data
 data = []
 
 for group in groups:

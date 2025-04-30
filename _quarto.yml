@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 execute-dir: project
 format:
   html:
@@ -10,3 +11,6 @@ format:
     code-summary: "Show code"
     number-sections: true
     fig-cap-location: bottom
+execute:
+  freeze: auto
+  echo: true
