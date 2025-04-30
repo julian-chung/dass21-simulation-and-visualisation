@@ -17,12 +17,12 @@ data <- data %>%
 # Pivot longer for plotting
 dass_long <- data %>%
   pivot_longer(cols = c(DASS_Anxiety, DASS_Depression, DASS_Stress),
-               names_to = "subscale",
-               values_to = "score")
+              names_to = "subscale",
+              values_to = "score")
 
 # Convert timepoint to factor with correct month order
 dass_long$timepoint <- factor(dass_long$timepoint,
-                               levels = c("baseline", "3_months", "6_months", "9_months", "12_months"))
+                              levels = c("baseline", "3_months", "6_months", "9_months", "12_months"))
 
 # Create severity band classifier as per guidelines
 classify_severity <- function(score, subscale) {
@@ -50,7 +50,7 @@ intervention_data <- dass_long %>%
 # Classify severity bands
 intervention_data <- intervention_data %>%
   mutate(severity_band = mapply(classify_severity, score, subscale),
-         severity_band = factor(severity_band,
+        severity_band = factor(severity_band,
                                 levels = c("Normal", "Mild", "Moderate", "Severe", "Extremely Severe")))
 
 # Create time point labels
@@ -106,7 +106,7 @@ legend.key = element_rect(fill = "white", colour = NA)
 control_data <- dass_long %>%
   filter(group == "control") %>%
   mutate(severity_band = mapply(classify_severity, score, subscale),
-         severity_band = factor(severity_band,
+        severity_band = factor(severity_band,
                                 levels = c("Normal", "Mild", "Moderate", "Severe", "Extremely Severe")))
 
 # Plot: control group
@@ -124,8 +124,8 @@ ggplot(control_data, aes(x = severity_band, y = timepoint, colour = subscale)) +
   ) +
   scale_colour_manual("Subscale",
                       values = c("DASS_Anxiety" = "#E23418",
-                                 "DASS_Depression" = "#184CE2",
-                                 "DASS_Stress" = "#03AC50"),
+                                "DASS_Depression" = "#184CE2",
+                                "DASS_Stress" = "#03AC50"),
                       labels = c("Anxiety", "Depression", "Stress")) +
   scale_y_discrete(labels = timepoint_labels) +
   coord_flip() +
