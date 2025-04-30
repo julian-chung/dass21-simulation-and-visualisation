@@ -3842,12 +3842,13 @@ vertical-align: -.125em;
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">2</span> Data Preparation</a></li>
-  <li><a href="#severity-classification" id="toc-severity-classification" class="nav-link" data-scroll-target="#severity-classification"><span class="header-section-number">3</span> Severity Classification</a></li>
-  <li><a href="#visualisation-intervention-group" id="toc-visualisation-intervention-group" class="nav-link" data-scroll-target="#visualisation-intervention-group"><span class="header-section-number">4</span> Visualisation: Intervention Group</a></li>
-  <li><a href="#visualisation-control-group" id="toc-visualisation-control-group" class="nav-link" data-scroll-target="#visualisation-control-group"><span class="header-section-number">5</span> Visualisation: Control Group</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6</span> Summary</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7</span> References</a></li>
+  <li><a href="#simulation-logic" id="toc-simulation-logic" class="nav-link" data-scroll-target="#simulation-logic"><span class="header-section-number">2</span> Simulation Logic</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">3</span> Data Preparation</a></li>
+  <li><a href="#severity-classification" id="toc-severity-classification" class="nav-link" data-scroll-target="#severity-classification"><span class="header-section-number">4</span> Severity Classification</a></li>
+  <li><a href="#visualisation-intervention-group" id="toc-visualisation-intervention-group" class="nav-link" data-scroll-target="#visualisation-intervention-group"><span class="header-section-number">5</span> Visualisation: Intervention Group</a></li>
+  <li><a href="#visualisation-control-group" id="toc-visualisation-control-group" class="nav-link" data-scroll-target="#visualisation-control-group"><span class="header-section-number">6</span> Visualisation: Control Group</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -3883,7 +3884,9 @@ vertical-align: -.125em;
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>The Depression Anxiety Stress Scales (DASS21) is a self-report instrument designed to measure the emotional states of depression, anxiety, and stress. The short-form DASS21 contains 21 items divided evenly across the three subscales. Each item is scored from 0 to 3, and subscale totals are multiplied by 2 to align with the original DASS42 severity classification thresholds.</p>
 <p>This project provides a brief example of how longitudinal DASS21 data might be visualised for a cohort in a clinical trial context. Specifically, we simulate the effects of an intervention on DASS21 scores over five timepoints: baseline, 3, 6, 9, and 12 months. This simulation includes both an intervention and a control group and mirrors REDCap-style data output.</p>
-<p>2 Simulation Logic</p>
+</section>
+<section id="simulation-logic" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="simulation-logic"><span class="header-section-number">2</span> Simulation Logic</h2>
 <p>The dataset used in this analysis was generated using a Python script to simulate individual DASS21 item responses across five timepoints for 20 participants in each group. For the intervention group, an item-level treatment effect was applied to reduce scores by 20% after baseline.</p>
 <p>The Python script: - Simulates REDCap-style output with Q1–Q21 and total subscale scores - Applies realistic item distributions using weighted probabilities - Aggregates items into DASS subscale scores (Depression, Anxiety, Stress)</p>
 <p>This simulated dataset was designed to replicate the layout and structure of typical REDCap CSV exports used in clinical trials. Because real participant-level data cannot be shared, this approach enables the visualisation framework to be demonstrated without exposing sensitive information.</p>
@@ -4008,8 +4011,8 @@ Show Python Simulation Code
 </div>
 </div>
 </section>
-<section id="data-preparation" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">2</span> Data Preparation</h2>
+<section id="data-preparation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">3</span> Data Preparation</h2>
 <p>The subscale scores are first multiplied by 2 to align with DASS42 scoring conventions. The dataset is then reshaped into long format to enable visualisation of changes across timepoints and subscales.</p>
 <div id="load-and-reshape-data" class="cell">
 <div class="cell">
@@ -4029,8 +4032,8 @@ Show Python Simulation Code
 </div>
 </div>
 </section>
-<section id="severity-classification" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="severity-classification"><span class="header-section-number">3</span> Severity Classification</h2>
+<section id="severity-classification" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="severity-classification"><span class="header-section-number">4</span> Severity Classification</h2>
 <p>The DASS21 instrument includes three subscales: Depression, Anxiety, and Stress. After summing item responses and multiplying scores by 2, each subscale can be categorised into severity bands based on validated thresholds.</p>
 <p>The severity bands are:</p>
 <table class="caption-top table">
@@ -4096,8 +4099,8 @@ Show Python Simulation Code
 </div>
 </div>
 </section>
-<section id="visualisation-intervention-group" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="visualisation-intervention-group"><span class="header-section-number">4</span> Visualisation: Intervention Group</h2>
+<section id="visualisation-intervention-group" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="visualisation-intervention-group"><span class="header-section-number">5</span> Visualisation: Intervention Group</h2>
 <p>This visualisation demonstrates how individual participants’ subscale scores can be tracked across severity bands over time. By visualising Depression, Anxiety, and Stress trajectories separately, it becomes possible to assess how a treatment impacts specific psychological domains — and to detect patterns that might be masked in a total DASS21 score.</p>
 <div id="intervention-plot" class="cell">
 <div class="cell">
@@ -4159,8 +4162,8 @@ Show Python Simulation Code
 </div>
 <p>This plot shows how individual participants responded across DASS21 subscales over 12 months with a simulated intervention.</p>
 </section>
-<section id="visualisation-control-group" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="visualisation-control-group"><span class="header-section-number">5</span> Visualisation: Control Group</h2>
+<section id="visualisation-control-group" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="visualisation-control-group"><span class="header-section-number">6</span> Visualisation: Control Group</h2>
 <p>The control group trajectories remain comparatively stable, ideally contextualise the change observed in the intervention cohort.</p>
 <div id="control-plot" class="cell">
 <div class="cell">
@@ -4213,15 +4216,15 @@ Show Python Simulation Code
 </div>
 <p>This plotting approach can be easily adapted to visualise total DASS scores or applied to other repeated-measures instruments such as the PHQ-9 or EQ-5D.</p>
 </section>
-<section id="summary" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="summary"><span class="header-section-number">6</span> Summary</h2>
+<section id="summary" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="summary"><span class="header-section-number">7</span> Summary</h2>
 <p>This simulated visualisation demonstrates how individual-level DASS21 data could be presented longitudinally across multiple timepoints. Faceted plots by participant ID provide granular insight into symptom trajectories across depression, anxiety, and stress domains.</p>
 <p>Such a visualisation could be used in early-phase trials, psychological studies, or pilot data analysis to: - Detect trends in subscale response that may be masked in aggregated DASS21 score - Identify participants with worsening symptoms - Compare intervention vs. control effectiveness visually - Quickly highlight concerning individual patterns (e.g., a participant worsening in depression despite treatment)</p>
 <p>By allowing clinicians or trial monitors to glance across a cohort and pinpoint which domain is driving deterioration or improvement, this approach provides a clear advantage over reporting only total scores. While this demonstration focuses on DASS21 subscales, the same framework could be adapted to visualise total DASS scores or other common patient-reported outcome (PRO) instruments such as the PHQ-9 or EQ-5D.</p>
 <p>Future enhancements might include summary panels, group-level means, or animated progression across timepoints.</p>
 </section>
-<section id="references" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="references"><span class="header-section-number">7</span> References</h2>
+<section id="references" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="references"><span class="header-section-number">8</span> References</h2>
 <p><a href="https://arc.psych.wisc.edu/self-report/depression-anxiety-stress-scale-21-dass21/">Depression Anxiety Stress Scale-21 (DASS21)</a></p>
 <p><a href="https://comorbidityguidelines.org.au/appendix-k-depression-anxiety-stress-scale-dass-21/dass21-scoring-template-and-interpretation">DASS-21 Scoring template and interpretation</a></p>
 <p><a href="https://raw.githubusercontent.com/jjcurtin/arc_measures/main/DASS21/DASS21.R">Manual for the Depression Anxiety Stress Scales. (2nd. Ed.) Sydney: Psychology Foundation.</a></p>

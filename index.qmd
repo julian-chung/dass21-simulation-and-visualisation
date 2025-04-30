@@ -10,7 +10,7 @@ The Depression Anxiety Stress Scales (DASS21) is a self-report instrument design
 
 This project provides a brief example of how longitudinal DASS21 data might be visualised for a cohort in a clinical trial context. Specifically, we simulate the effects of an intervention on DASS21 scores over five timepoints: baseline, 3, 6, 9, and 12 months. This simulation includes both an intervention and a control group and mirrors REDCap-style data output.
 
-2 Simulation Logic
+## Simulation Logic
 
 The dataset used in this analysis was generated using a Python script to simulate individual DASS21 item responses across five timepoints for 20 participants in each group. For the intervention group, an item-level treatment effect was applied to reduce scores by 20% after baseline.
 
