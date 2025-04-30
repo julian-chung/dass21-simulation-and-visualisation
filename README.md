@@ -1,43 +1,49 @@
 # Longitudinal Visualisation of DASS21 Subscale Scores
 
-The DASS21 (Depression, Anxiety, and Stress Scales – short form) is a common self-report instrument used in psychology and mental health research.
+The DASS21 (Depression, Anxiety, and Stress Scales – short form) is a widely used self-report instrument in psychology and mental health research.
 
-This project demonstrates how DASS21 subscale scores (Depression, Anxiety, Stress) can be visualised longitudinally across multiple timepoints for a simulated clinical cohort. The visualisation approach supports clear, per-participant subscale tracking over time and could be used in early-phase trials, psychological research, or exploratory analyses.
+This project demonstrates how DASS21 subscale scores (Depression, Anxiety, Stress) can be visualised longitudinally across five timepoints using simulated clinical trial data. The approach supports clear, per-participant tracking and could be used in early-phase trials, exploratory studies, or internal dashboards.
 
-## 🔍 Project Overview
+---
 
-- **Objective:** Simulate REDCap-style data and create a reusable visualisation framework for individual-level symptom tracking.
-- **Toolchain:** Python (for data simulation), R + ggplot2 + Quarto (for analysis and reporting)
-- **Focus:** Subscale-level trajectories for Depression, Anxiety, and Stress across five timepoints (baseline through 12 months)
+## 🔍 Project Summary
 
-## 🔍 Highlights
+- **Goal:** Simulate REDCap-style output and visualise individual symptom trajectories across DASS subscales.
+- **Toolchain:** Python (simulation), R + ggplot2 (visualisation), Quarto (reporting)
+- **Scope:** Intervention vs. control comparison across baseline, 3, 6, 9, and 12 months
 
-- Fully reproducible simulation pipeline (Python)
-- REDCap-style output with Q1–Q21 + subscale scores
-- DASS severity band classification applied in R
-- Participant-level plots by subscale and timepoint
-- Clean faceted visualisation with ggplot2
-- Quarto-powered report with exportable figures
+---
 
-## 📈 Visualisation Features
+## ✨ Features
 
-- Faceted plots showing each participant’s symptom progression
-- Severity bands aligned with DASS42 thresholds
-- Control vs. intervention group comparison
-- Extensible to total scores or other PRO instruments (e.g. PHQ-9, EQ-5D)
+- Item-level simulation of Q1–Q21 across five timepoints
+- Subscale severity classification using DASS42 thresholds
+- Faceted plots showing individual trajectories by subscale
+- Modularised R plotting script with reusable function
+- Export-ready figures with consistent styling
+- Exportable sample figures included for quick reference (see `/figures`)
 
-## 📂 Files
+---
 
-- `dass21_longitudinal_visualisation.qmd` – Quarto notebook (R + markdown)
-- `dass21_facet_plot.r` – R script for faceted plots
-- `simulated_dass21_full.csv` – Synthetic dataset (no real participant data)
-- `scripts/data_simulation.py` – Python script to generate the dataset
+## 📂 Key Files
 
-## 🌐 View the Report
+- `index.qmd` – Final Quarto notebook with inline discussion and visuals
+- `scripts/dass21_data_simulation.py` – Python script for generating synthetic DASS21 data
+- `scripts/simulation_checking.py` – Helper script to confirm intervention/control divergence and adjust simulation parameters as required
+- `data/simulated_dass21_full.csv` – Simulated REDCap-style dataset (Q1–Q21 + subscales)
+- `R/dass21_facet_plot.R` – Modularised R script for reusable visualisation
+- `figures/control_group_plot.png` – Sample output for control group (for quick inspection)
+- `figures/intervention_group_plot.png` – Sample output for intervention group
 
-👉 [**Click here to view the report**]()
+---
 
-> Note: This is simulated data only. The project structure and visualisation logic are derived from real clinical workflows.
+## 🌐 View the Live Report
+
+👉 [**Click here to view the report**](https://julian-chung.github.io/dass21-simulation-and-visualisation/)
+
+> ⚠️ This project uses only simulated data. The visualisation structure and logic are adapted from real clinical trial workflows.
+
+---
 
 ## 🚀 Quickstart
 
