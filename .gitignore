@@ -1,0 +1,18 @@
+# Sensitive data
+original_work/
+
+# Ignore RStudio files
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python cache
+__pycache__/
+.ipynb_checkpoints
+
+# Python virtual environment
+.venv/
+
+# Operating System files
+.DS_Store
+Thumbs.db
