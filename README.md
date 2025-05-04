@@ -52,6 +52,21 @@ quarto render
 open docs/index.html
 ```
 
+---
+
+## 🔧 Future Upgrades
+
+This project could be extended with interactive features to support exploratory analysis and real-time insights:
+
+- **Interactive Plotting**: Use `plotly` or `ggiraph` to add tooltips on hover (e.g. show exact subscale scores, total score, participant ID).
+- **Dynamic Filtering**: Add dropdowns or sliders (via Shiny) to filter by group, subscale, or timepoint.
+- **Shiny Integration**: Build an interactive Shiny app to explore individual participant trajectories, toggle views, and export visuals.
+- **Flexible Layouts**: Consider converting the Quarto report into a `flexdashboard` for an interactive summary format.
+- **Web Deployment**: Host an interactive version via [shinyapps.io](https://www.shinyapps.io/), RStudio Connect, or embed in a GitHub Pages site using Quarto’s `shiny` support.
+
+> These features would be especially useful in clinical dashboards or early-phase trial monitoring tools.
+
+
 ## 🧠 Author
 
 Julian Chung  
