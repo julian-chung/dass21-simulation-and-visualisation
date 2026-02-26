@@ -5,7 +5,9 @@ execute-dir: project
 format:
   html:
     toc: true
-    theme: cosmo
+    theme:
+      light: [cosmo, assets/styles.css]
+      dark: [darkly, assets/styles-dark.css]
     embed-resources: true
     code-fold: true
     code-summary: "Show code"

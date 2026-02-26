@@ -6,7 +6,7 @@ This project demonstrates how DASS21 subscale scores (Depression, Anxiety, Stres
 
 ---
 
-## 🔍 Project Summary
+## Project Summary
 
 - **Goal:** Simulate REDCap-style output and visualise individual symptom trajectories across DASS subscales.
 - **Toolchain:** Python (simulation), R + ggplot2 (visualisation), Quarto (reporting)
@@ -14,38 +14,26 @@ This project demonstrates how DASS21 subscale scores (Depression, Anxiety, Stres
 
 ---
 
-## ✨ Features
+## Key Files
 
-- Item-level simulation of Q1–Q21 across five timepoints
-- Subscale severity classification using DASS42 thresholds
-- Faceted plots showing individual trajectories by subscale
-- Modularised R plotting script with reusable function
-- Export-ready figures with consistent styling
-- Exportable sample figures included for quick reference (see `/figures`)
-
----
-
-## 📂 Key Files
-
-- `index.qmd` – Final Quarto notebook with inline discussion and visuals
+- `index.qmd` – Quarto notebook with inline discussion and visuals
 - `scripts/dass21_data_simulation.py` – Python script for generating synthetic DASS21 data
-- `scripts/simulation_checking.py` – Helper script to confirm intervention/control divergence and adjust simulation parameters as required
+- `scripts/simulation_checking.py` – Helper script to confirm intervention/control divergence
 - `data/simulated_dass21_full.csv` – Simulated REDCap-style dataset (Q1–Q21 + subscales)
 - `R/dass21_facet_plot.R` – Modularised R script for reusable visualisation
-- `figures/control_group_plot.png` – Sample output for control group (for quick inspection)
-- `figures/intervention_group_plot.png` – Sample output for intervention group
+- `figures/` – Sample output figures for control and intervention groups
 
 ---
 
-## 🌐 View the Live Report
+## View the Live Report
 
-👉 [**Click here to view the report**](https://julian-chung.github.io/dass21-simulation-and-visualisation/)
+[**Click here to view the report**](https://julian-chung.github.io/dass21-simulation-and-visualisation/)
 
-> ⚠️ This project uses only simulated data. The visualisation structure and logic are adapted from real clinical trial workflows.
+> This project uses only simulated data. The visualisation structure and logic are adapted from real clinical trial workflows.
 
 ---
 
-## 🚀 Quickstart
+## Quickstart
 
 ```bash
 quarto render
@@ -54,20 +42,7 @@ open docs/index.html
 
 ---
 
-## 🔧 Future Upgrades
+## Author
 
-This project could be extended with interactive features to support exploratory analysis and real-time insights:
-
-- **Interactive Plotting**: Use `plotly` or `ggiraph` to add tooltips on hover (e.g. show exact subscale scores, total score, participant ID).
-- **Dynamic Filtering**: Add dropdowns or sliders (via Shiny) to filter by group, subscale, or timepoint.
-- **Shiny Integration**: Build an interactive Shiny app to explore individual participant trajectories, toggle views, and export visuals.
-- **Flexible Layouts**: Consider converting the Quarto report into a `flexdashboard` for an interactive summary format.
-- **Web Deployment**: Host an interactive version via [shinyapps.io](https://www.shinyapps.io/), RStudio Connect, or embed in a GitHub Pages site using Quarto’s `shiny` support.
-
-> These features would be especially useful in clinical dashboards or early-phase trial monitoring tools.
-
-
-## 🧠 Author
-
-Julian Chung  
-Public Health | Data Analysis | Clinical Trials  
+Julian Chung
+Public Health | Data Analysis | Clinical Trials
