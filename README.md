@@ -33,6 +33,23 @@ This project demonstrates how DASS21 subscale scores (Depression, Anxiety, Stres
 
 ---
 
+## Simulation Approach
+
+Item responses are generated from a 3-level latent variable model:
+
+```
+θ_ijt = η_i + ε_it + δ(group, time) + ζ_ijt
+```
+
+- **η_i** — stable between-person random intercept (σ = 1.0), giving each participant a consistent baseline severity
+- **ε_it** — within-person timepoint fluctuation (σ = 0.5), capturing natural variability across visits
+- **δ** — deterministic group × time effect: control reaches −0.2 SD at 12 months (natural remission); intervention reaches −0.5 SD (medium Cohen's d)
+- **ζ_ijt** — item-level noise (σ = 0.3)
+
+Continuous latent scores are mapped to ordinal 0–3 responses via fixed thresholds calibrated to a realistic item distribution. This produces coherent within-subject trajectories rather than independent random draws at each timepoint.
+
+---
+
 ## Quickstart
 
 ```bash
