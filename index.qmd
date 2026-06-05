@@ -18,6 +18,7 @@ The subscale scores are first multiplied by 2 to align with DASS42 scoring conve
 
 ::: {.cell #load-and-reshape-data}
 ```{r}
+#| warning: false
 suppressPackageStartupMessages(library(tidyverse))
 
 # Load data
