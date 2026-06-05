@@ -6,137 +6,11 @@ format: html
 
 ## Introduction
 
-The Depression Anxiety Stress Scales (DASS21) is a self-report instrument designed to measure the emotional states of depression, anxiety, and stress. The short-form DASS21 contains 21 items divided evenly across the three subscales. Each item is scored from 0 to 3, and subscale totals are multiplied by 2 to align with the original DASS42 severity classification thresholds.
+The Depression Anxiety Stress Scales (DASS21) is a self-report instrument designed to measure the emotional states of depression, anxiety, and stress. The short-form DASS21 contains 21 items divided evenly across the three subscales. Each item is scored from 0 to 3, and subscale totals are multiplied by 2 to align with the original DASS42 severity classification thresholds. This report tracks individual subscale scores across five timepoints (baseline, 3, 6, 9, and 12 months) using simulated intervention and control data.
 
-This project provides a brief example of how longitudinal DASS21 data might be visualised for a cohort in a clinical trial context. Specifically, we simulate the effects of an intervention on DASS21 scores over five timepoints: baseline, 3, 6, 9, and 12 months. This simulation includes both an intervention and a control group and mirrors REDCap-style data output.
+## Simulation
 
-## Simulation Logic
-
-The dataset used in this analysis was generated using a Python script to simulate individual DASS21 item responses across five timepoints for 20 participants in each group. For the intervention group, an item-level treatment effect was applied to reduce scores by 20% after baseline.
-
-The Python script:
-- Simulates REDCap-style output with Q1–Q21 and total subscale scores
-- Applies realistic item distributions using weighted probabilities
-- Aggregates items into DASS subscale scores (Depression, Anxiety, Stress)
-
-This simulated dataset was designed to replicate the layout and structure of typical REDCap CSV exports used in clinical trials. Because real participant-level data cannot be shared, this approach enables the visualisation framework to be demonstrated without exposing sensitive information.
-
-A separate Python script was used to confirm that the simulated intervention and control groups produced discernible differences in mean DASS21 subscale scores across timepoints. The effect size modifier was adjusted iteratively until a realistic, interpretable difference was achieved.
-
-This scaffolding could be reused in future studies with real REDCap data, enabling clinicians or trial monitors to track psychological changes across timepoints. The framework is readily extensible to total DASS scores or other patient-reported outcome (PRO) instruments such as the PHQ-9 or EQ-5D.
-
-::: {.cell}
-<details>
-<summary>Show Python Simulation Code</summary>
-```python
-import pandas as pd
-import numpy as np
-import os
-
-# Set random seed for reproducibility
-np.random.seed(42)
-
-# Assigning Parameters
-n_per_group = 20
-timepoints = ["baseline", "3_months", "6_months", "9_months", "12_months"]
-groups = ["intervention", "control"]
-questions = [f"Q{i}" for i in range(1, 22)]
-
-# Mapping the DASS21 questions to their respective subscales
-dass_anxiety = ["Q2", "Q4", "Q7", "Q9", "Q15", "Q19", "Q20"]
-dass_depression = ["Q3", "Q5", "Q10", "Q13", "Q16", "Q17", "Q21"]
-dass_stress = ["Q1", "Q6", "Q8", "Q11", "Q12", "Q14", "Q18"]
-
-# Creating an effect modifier to apply to the treatment group
-def apply_treatment_effect(scores, effect_size=0.2):
-    return np.clip(np.round(scores * (1 - effect_size)), 0, 3).astype(int)
-
-# Generate data
-data = []
-
-for group in groups:
-    for subject_id in range(1, n_per_group + 1):
-        full_id = f"{group[:1].upper()}{subject_id:02d}"
-        for time in timepoints:
-            row = {
-                "id": full_id,
-                "group": group,
-                "timepoint": time
-            }
-            for q in questions:
-                base_score = np.random.choice([0, 1, 2, 3], p=[0.1, 0.2, 0.4, 0.3])
-                if group == "intervention" and time != "baseline":
-                    row[q] = apply_treatment_effect(np.array([base_score]))[0]
-                else:
-                    row[q] = base_score
-
-            # Calculate subscale scores
-            row["DASS_Anxiety"] = sum([row[q] for q in dass_anxiety])
-            row["DASS_Depression"] = sum([row[q] for q in dass_depression])
-            row["DASS_Stress"] = sum([row[q] for q in dass_stress])
-            data.append(row)
-
-# Create DataFrame
-df = pd.DataFrame(data)
-
-# Save to CSV
-output_dir = "data"
-os.makedirs(output_dir, exist_ok=True)
-csv_path = os.path.join(output_dir, "simulated_dass21_full.csv")
-df.to_csv(csv_path, index=False)
-```
-</details>
-:::
-
-A separate python script was used to confirm that the simulated intervention and control groups produced discernible differences in mean DASS21 subscale scores across timepoints, the effect size modifier was adjusted until the desired result was achieved.
-
-The result is a CSV ready for analysis in R.
-
-To visually confirm if the intervention group is meaningfully different to the control group in the simulated data, we quickly inspect the distribution of total DASS21 scores at baseline.
-
-::: {.cell #plot-simulated-data}
-```{r}
-suppressPackageStartupMessages(library(tidyverse))
-
-# Load data
-data <- read.csv(here::here("data", "simulated_dass21_full.csv"))
-
-# Prepare baseline data
-summary_plot_data <- data %>%
-  filter(timepoint == "baseline") %>%
-  mutate(
-    total_score = DASS_Anxiety + DASS_Depression + DASS_Stress,
-    group = factor(group, levels = c("control", "intervention"),
-                  labels = c("Control", "Intervention"))
-  )
-
-# Plot
-ggplot(summary_plot_data, aes(x = group, y = total_score, fill = group)) +
-  geom_violin(trim = FALSE, alpha = 0.5, show.legend = FALSE) +
-  geom_boxplot(
-    width = 0.1, 
-    outlier.shape = NA, 
-    fill = "white", 
-    colour = "gray40", 
-    linewidth = 0.5
-  ) +
-  scale_fill_manual(values = c("Control" = "#1f77b4", "Intervention" = "#ff7f0e")) +
-  labs(
-    title = "Total DASS21 Scores by Group at Baseline",
-    subtitle = "Comparison of control and intervention groups in the simulated data (n = 20 per group)",
-    x = "Group",
-    y = "Total DASS21 Score (0–126)"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5, size = 10, color = "gray30"),
-    axis.title.x = element_text(face = "bold"),
-    axis.title.y = element_text(face = "bold"),
-    axis.text = element_text(size = 10)
-  )
-```
-:::
+The dataset was generated in Python: 20 participants per group, scored across five timepoints. Since real participant data can't be shared, simulation lets the visualisation framework be demonstrated without exposing sensitive information.
 
 ## Data Preparation
 
@@ -144,6 +18,11 @@ The subscale scores are first multiplied by 2 to align with DASS42 scoring conve
 
 ::: {.cell #load-and-reshape-data}
 ```{r}
+suppressPackageStartupMessages(library(tidyverse))
+
+# Load data
+data <- read.csv(here::here("data", "simulated_dass21_full.csv"))
+
 # Multiply subscale scores by 2 to match DASS42 scoring conventions
 scored_data <- data %>%
   mutate(across(c(DASS_Anxiety, DASS_Depression, DASS_Stress), ~ .x * 2))
@@ -194,7 +73,7 @@ dass_long <- dass_long %>%
 
 ## Visualisation: Intervention Group
 
-This visualisation demonstrates how individual participants’ subscale scores can be tracked across severity bands over time. By visualising Depression, Anxiety, and Stress trajectories separately, it becomes possible to assess how a treatment impacts specific psychological domains — and to detect patterns that might be masked in a total DASS21 score.
+This visualisation demonstrates how individual participants' subscale scores can be tracked across severity bands over time. By visualising Depression, Anxiety, and Stress trajectories separately, it becomes possible to assess how a treatment impacts specific psychological domains and detect patterns that might be masked in a total DASS21 score.
 
 ::: {.cell #intervention-plot}
 ```{r}
@@ -245,11 +124,9 @@ ggplot(intervention_data, aes(x = severity_band, y = timepoint, colour = subscal
 ```
 :::
 
-This plot shows how individual participants responded across DASS21 subscales over 12 months with a simulated intervention.
-
 ## Visualisation: Control Group
 
-The control group trajectories remain comparatively stable, ideally contextualise the change observed in the intervention cohort.
+The control group trajectories remain comparatively stable, contextualising the change observed in the intervention cohort.
 
 ::: {.cell #control-plot}
 ```{r}
@@ -291,27 +168,15 @@ ggplot(control_data, aes(x = severity_band, y = timepoint, colour = subscale)) +
 ```
 :::
 
-This plotting approach can be easily adapted to visualise total DASS scores or applied to other repeated-measures instruments such as the PHQ-9 or EQ-5D.
-
 ## Summary
 
-This simulated visualisation demonstrates how individual-level DASS21 data could be presented longitudinally across multiple timepoints. Faceted plots by participant ID provide granular insight into symptom trajectories across depression, anxiety, and stress domains.
-
-Such a visualisation could be used in early-phase trials, psychological studies, or pilot data analysis to:
-- Detect trends in subscale response that may be masked in aggregated DASS21 score
-- Identify participants with worsening symptoms
-- Compare intervention vs. control effectiveness visually
-- Quickly highlight concerning individual patterns (e.g., a participant worsening in depression despite treatment)
-
-By allowing clinicians or trial monitors to glance across a cohort and pinpoint which domain is driving deterioration or improvement, this approach provides a clear advantage over reporting only total scores. While this demonstration focuses on DASS21 subscales, the same framework could be adapted to visualise total DASS scores or other common patient-reported outcome (PRO) instruments such as the PHQ-9 or EQ-5D.
-
-Future enhancements might include summary panels, group-level means, or animated progression across timepoints.
+Faceting by participant ID gives a quick way to scan across a cohort and see who is improving, stable, or worsening, and in which domain specifically. This is more informative than reporting a single total score, since deterioration in one subscale can be masked when scores are aggregated.
 
 ## References
 
 [Depression Anxiety Stress Scale-21 (DASS21)](https://arc.psych.wisc.edu/self-report/depression-anxiety-stress-scale-21-dass21/)
 
-[DASS-21 Scoring template and interpretation](https://comorbidityguidelines.org.au/appendix-k-depression-anxiety-stress-scale-dass-21/dass21-scoring-template-and-interpretation)
+[DASS-21 Scoring template and interpretation](https://comorbidityguidelines.org.au/appendix-k-depression-anxiety-stress-scale-21/dass21-scoring-template-and-interpretation)
 
 [Manual for the Depression Anxiety Stress Scales. (2nd. Ed.) Sydney: Psychology Foundation.](https://raw.githubusercontent.com/jjcurtin/arc_measures/main/DASS21/DASS21.R)
 
